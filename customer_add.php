@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     );
 
     if ($stmt->execute()) {
-        header("Location: customer_add.php");
+        header("Location: customers.php");
         exit();
     } else {
         $message = "Gagal menambahkan data: " . $stmt->error;
@@ -73,31 +73,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form method="POST">
       <div class="mb-3">
         <label class="form-label">NAMA TOKO</label>
-        <input type="text" name="nama_toko" class="form-control" required>
+        <input type="text" name="nama_toko" class="form-control" style="text-transform: uppercase;" required>
       </div>
       <div class="mb-3">
         <label class="form-label">NAMA PIC</label>
-        <input type="text" name="nama_pic" class="form-control">
+        <input type="text" name="nama_pic" class="form-control" style="text-transform: uppercase;">
       </div>
       <div class="mb-3">
         <label class="form-label">ALAMAT</label>
-        <textarea name="alamat" class="form-control" rows="3" required></textarea>
+        <textarea name="alamat" class="form-control" rows="3" style="text-transform: uppercase;" required></textarea>
       </div>
       <div class="mb-3">
         <label class="form-label">NO. TELP</label>
-        <input type="text" name="no_telp" class="form-control">
+        <input type="text" name="no_telp" class="form-control" style="text-transform: uppercase;">
       </div>
       <div class="mb-3">
         <label class="form-label">REGION</label>
-        <input type="text" name="region" class="form-control" required>
+        <input type="text" name="region" class="form-control" style="text-transform: uppercase;" required>
       </div>
       <div class="mb-3">
         <label class="form-label">AREA</label>
-        <input type="text" name="area" class="form-control" required>
+        <input type="text" name="area" class="form-control" style="text-transform: uppercase;" required>
       </div>
       <div class="mb-3">
         <label class="form-label">KOTA/KABUPATEN</label>
-        <input type="text" name="kota_kabupaten" class="form-control" required>
+        <input type="text" name="kota_kabupaten" class="form-control" style="text-transform: uppercase;" required>
       </div>
       <div class="mb-3">
         <label class="form-label">CLASS</label>

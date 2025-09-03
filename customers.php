@@ -8,31 +8,63 @@ $username = $_SESSION['username'];
 $role     = $_SESSION['role'];
 
 // --- Pagination setup
-$limit = 25; // data per halaman
+$limit = 10; // data per halaman
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
 // --- Pencarian
-$search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
-$where = "";
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$where  = "";
+$params = [];
+$types  = "";
+
 if ($search != '') {
-    $where = "WHERE nama_toko LIKE '%$search%' 
-              OR nama_pic LIKE '%$search%'
-              OR alamat LIKE '%$search%'
-              OR region LIKE '%$search%'
-              OR area LIKE '%$search%'
-              OR kota_kabupaten LIKE '%$search%'
-              OR class LIKE '%$search%'";
+    $where = "WHERE nama_toko LIKE ? 
+              OR nama_pic LIKE ?
+              OR alamat LIKE ?
+              OR region LIKE ?
+              OR area LIKE ?
+              OR kota_kabupaten LIKE ?";
+    // siapkan wildcard untuk LIKE
+    $searchParam = "%{$search}%";
+    // isi parameter array
+    for ($i = 0; $i < 6; $i++) {
+        $params[] = $searchParam;
+        $types   .= "s";
+    }
 }
 
-// --- Hitung total data
-$total_result = $conn->query("SELECT COUNT(*) as total FROM customers $where");
-$total_data   = $total_result->fetch_assoc()['total'];
-$total_pages  = ceil($total_data / $limit);
+// --- Hitung total data (gunakan prepared statement juga)
+if ($where != "") {
+    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM customers $where");
+    $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+    $total_result = $stmt->get_result();
+} else {
+    $total_result = $conn->query("SELECT COUNT(*) as total FROM customers");
+}
+$total_data  = $total_result->fetch_assoc()['total'];
+$total_pages = ceil($total_data / $limit);
 
 // --- Ambil data sesuai halaman
-$sql    = "SELECT * FROM customers $where ORDER BY id DESC LIMIT $limit OFFSET $offset";
-$result = $conn->query($sql);
+if ($where != "") {
+    $sql  = "SELECT * FROM customers $where ORDER BY id DESC LIMIT ? OFFSET ?";
+    $stmt = $conn->prepare($sql);
+
+    // gabungkan param pencarian + limit + offset
+    $params[] = $limit;
+    $params[] = $offset;
+    $types   .= "ii";
+
+    $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+    $result = $stmt->get_result();
+} else {
+    $stmt = $conn->prepare("SELECT * FROM customers ORDER BY id DESC LIMIT ? OFFSET ?");
+    $stmt->bind_param("ii", $limit, $offset);
+    $stmt->execute();
+    $result = $stmt->get_result();
+}
 
 // --- Export Excel
 if (isset($_GET['export']) && $_GET['export'] == 'excel') {
@@ -43,15 +75,15 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
 
     echo "<table border='1'>";
     echo "<tr>
-            <th>No</th>
-            <th>Nama Toko</th>
-            <th>Nama PIC</th>
-            <th>Alamat</th>
-            <th>No Telp</th>
-            <th>Region</th>
-            <th>Area</th>
-            <th>Kota/Kabupaten</th>
-            <th>Class</th>
+            <th>NO</th>
+            <th>NAMA TOKO</th>
+            <th>NAMA PIC</th>
+            <th>ALAMAT</th>
+            <th>NO TELP</th>
+            <th>REGION</th>
+            <th>AREA</th>
+            <th>KOTA/KABUPATEN</th>
+            <th>CLASS</th>
           </tr>";
 
     $export_sql    = "SELECT * FROM customers $where ORDER BY id DESC";
@@ -67,7 +99,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
                 <td>".$row['region']."</td>
                 <td>".$row['area']."</td>
                 <td>".$row['kota_kabupaten']."</td>
-                <td>Class ".$row['class']."</td>
+                <td>CLASS ".$row['class']."</td>
               </tr>";
     }
     echo "</table>";
@@ -85,15 +117,15 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="customers.php">PT. SLM</a>
+      <a class="navbar-brand" href="customers.php">PT. SELAMAT LANCAR MAJU</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link active" href="customers.php">DATA CUSTOMER</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">DAILY VISIT</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">TIMESTAMP</a></li>
+            <li class="nav-item"><a class="nav-link" href="daily_visit.php">DAILY VISIT</a></li>
+            <li class="nav-item"><a class="nav-link" href="timestamp.php">TIMESTAMP</a></li>
             <li class="nav-item"><a class="nav-link" href="#">PURCHASE ORDER</a></li>
             <li class="nav-item"><a class="nav-link" href="#">STOCK BARANG</a></li>
             <li class="nav-item">
@@ -110,12 +142,11 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
 
     <hr>
     <h4 id="customers">DATA CUSTOMERS</h4>
-    <a href="customer_add.php" class="btn btn-primary btn-sm mb-3">Tambah Customer</a>
 
     <!-- Form Pencarian -->
     <form method="GET" class="row g-2 mb-3">
         <div class="col-md-10">
-            <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" class="form-control">
+            <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" class="form-control" style="text-transform: uppercase;">
         </div>
         <div class="col">
             <button type="submit" class="btn btn-primary w-100">CARI</button>
@@ -174,26 +205,46 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
 
     <!-- Pagination -->
     <nav aria-label="Page navigation">
-      <ul class="pagination justify-content-center">
-        <!-- Tombol Previous -->
+      <ul class="pagination pagination-sm justify-content-center flex-wrap">
+        <!-- Tombol First -->
         <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-          <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
-            <span aria-hidden="true">PREVIOUS</span>
-          </a>
+          <a class="page-link" href="?page=1<?= ($search ? "&search=" . urlencode($search) : "") ?>">AWAL</a>
         </li>
 
-        <!-- Nomor Halaman -->
-        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+        <!-- Tombol Previous -->
+        <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+          <a class="page-link" href="?page=<?= $page - 1 ?><?= ($search ? "&search=" . urlencode($search) : "") ?>">SEBELUMNYA</a>
+        </li>
+
+        <!-- Nomor halaman dinamis -->
+        <?php
+        $range = 2; // tampilkan 2 nomor sebelum & sesudah halaman aktif
+        $start = max(1, $page - $range);
+        $end   = min($total_pages, $page + $range);
+
+        if ($start > 1) {
+            echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+        }
+
+        for ($i = $start; $i <= $end; $i++): ?>
           <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+            <a class="page-link" href="?page=<?= $i ?><?= ($search ? "&search=" . urlencode($search) : "") ?>"><?= $i ?></a>
           </li>
-        <?php endfor; ?>
+        <?php endfor;
+
+        if ($end < $total_pages) {
+            echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+        }
+        ?>
 
         <!-- Tombol Next -->
         <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
-          <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
-            <span aria-hidden="true">NEXT</span>
-          </a>
+          <a class="page-link" href="?page=<?= $page + 1 ?><?= ($search ? "&search=" . urlencode($search) : "") ?>">SELANJUTNYA</a>
+        </li>
+
+        <!-- Tombol Last -->
+        <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
+          <a class="page-link" href="?page=<?= $total_pages ?><?= ($search ? "&search=" . urlencode($search) : "") ?>">AKHIR</a>
         </li>
       </ul>
     </nav>

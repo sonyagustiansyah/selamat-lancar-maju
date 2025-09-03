@@ -1,8 +1,14 @@
 <?php
 include 'config.php';
 
+// Cegah login ulang jika sudah login
+if (isset($_SESSION['username'])) {
+    header("Location: customers.php");
+    exit();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
+    $username = trim($_POST['username']);
     $password = $_POST['password'];
 
     $sql  = "SELECT * FROM users WHERE username=?";
@@ -14,9 +20,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($res->num_rows > 0) {
         $user = $res->fetch_assoc();
         if (password_verify($password, $user['password'])) {
+            session_regenerate_id(true);
             $_SESSION['username'] = $user['username'];
             $_SESSION['role']     = $user['role'];
-            header("Location: customers.php");
+
+            if ($user['role'] == 'ADMIN') {
+                header("Location: customers.php");
+            } else {
+                header("Location: customers.php");
+            }
             exit();
         } else {
             $error = "Password salah!";
@@ -30,23 +42,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <title>LOGIN</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #4e73df, #1cc88a);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-card {
+      max-width: 400px;
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .login-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .login-header h2 {
+      font-weight: bold;
+      color: #4e73df;
+    }
+  </style>
 </head>
-<body class="container mt-5">
-  <h2>Login</h2>
-  <?php if (isset($error)) echo "<div class='alert alert-danger'>$error</div>"; ?>
-  <form method="POST">
-    <div class="mb-3">
-      <label>Username</label>
-      <input type="text" name="username" class="form-control" required>
+<body>
+  <div class="card login-card p-4">
+    <div class="login-header">
+      <h2>LOGIN</h2>
     </div>
-    <div class="mb-3">
-      <label>Password</label>
-      <input type="password" name="password" class="form-control" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-  </form>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <?php if (isset($error)) echo "<div class='alert alert-danger'>".htmlspecialchars($error)."</div>"; ?>
+    <form method="POST">
+      <div class="mb-3">
+        <label class="form-label">USERNAME</label>
+        <input type="text" name="username" class="form-control" required autofocus>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">PASSWORD</label>
+        <input type="password" name="password" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">LOGIN</button>
+    </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

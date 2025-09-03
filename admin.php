@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-if ($_SESSION['role'] != 'admin') {
+if ($_SESSION['role'] != 'ADMIN') {
     die("Akses ditolak!");
 }
-echo "<h2>Admin Panel</h2><a href='dashboard.php'>Kembali</a>";
+echo "<h2>Admin Panel</h2><a href='login.php'>Kembali</a>";
