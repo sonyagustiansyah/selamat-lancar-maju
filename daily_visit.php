@@ -32,13 +32,13 @@ if (isset($_POST['submit'])) {
         $stmt->bind_param("ssssssssss", 
             $tanggal, $nama_sales, $nama_toko, $nama_pic, $alamat, $area, $kode, $tujuan, $keterangan, $inputer);
         if ($stmt->execute()) {
-            $success = "Data berhasil disimpan.";
+            $success = "DATA BERHASIL DISIMPAN.";
         } else {
-            $error = "Gagal simpan data.";
+            $error = "GAGAL SIMPAN DATA.";
         }
         $stmt->close();
     } else {
-        $error = "Semua field wajib diisi.";
+        $error = "SEMUA FIELD WAJIB DIISI.";
     }
 }
 
@@ -126,7 +126,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
             <li class="nav-item"><a class="nav-link" href="customers.php">DATA CUSTOMER</a></li>
             <li class="nav-item"><a class="nav-link active" href="daily_visit.php">DAILY VISIT</a></li>
             <li class="nav-item"><a class="nav-link" href="timestamp.php">TIMESTAMP</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">PURCHASE ORDER</a></li>
+            <li class="nav-item"><a class="nav-link" href="purchase_order.php">PURCHASE ORDER</a></li>
             <li class="nav-item"><a class="nav-link" href="#">STOCK BARANG</a></li>
             <li class="nav-item">
                 <a class="nav-link text-white btn btn-sm btn-danger px-3" href="logout.php">LOGOUT</a>
@@ -179,7 +179,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
       <div class="col-md-2">
         <label class="form-label">KODE</label>
         <select name="kode" class="form-select" required>
-          <option value="">Pilih</option>
+          <option value="">PILIH</option>
           <option value="DK1">DK1</option>
           <option value="DK2">DK2</option>
           <option value="LK1">LK1</option>
@@ -256,7 +256,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
                 $no++;
             }
         } else {
-            echo "<tr><td colspan='11' class='text-center'>Tidak ada data</td></tr>";
+            echo "<tr><td colspan='11' class='text-center'>TIDAK ADA DATA.</td></tr>";
         }
         ?>
       </tbody>

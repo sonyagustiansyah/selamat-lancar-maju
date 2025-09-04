@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 03, 2025 at 11:46 AM
+-- Generation Time: Sep 04, 2025 at 08:55 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -460,6 +460,41 @@ INSERT INTO `daily_visit` (`id`, `tanggal`, `nama_sales`, `nama_toko`, `nama_pic
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `purchase_orders`
+--
+
+CREATE TABLE `purchase_orders` (
+  `id` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `nama_sales` varchar(100) NOT NULL,
+  `nama_toko` varchar(255) NOT NULL,
+  `nama_pic` varchar(255) DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `area` varchar(100) DEFAULT NULL,
+  `kode` enum('DK1','DK2','LK1','LK2') NOT NULL,
+  `diskon` decimal(5,2) DEFAULT 0.00,
+  `top_day` int(11) DEFAULT 0,
+  `qty` int(11) DEFAULT 0,
+  `tanggal_kirim` date DEFAULT NULL,
+  `ar_deadline` date DEFAULT NULL,
+  `keterangan` text DEFAULT NULL,
+  `inputer` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `purchase_orders`
+--
+
+INSERT INTO `purchase_orders` (`id`, `tanggal`, `nama_sales`, `nama_toko`, `nama_pic`, `alamat`, `area`, `kode`, `diskon`, `top_day`, `qty`, `tanggal_kirim`, `ar_deadline`, `keterangan`, `inputer`, `created_at`) VALUES
+(1, '2025-09-03', 'THOMAS', 'SUBUR MOTOR I', '', 'BOGOR RAYA NO. 015 KM 41', 'CIBINONG', 'DK1', 15.00, 30, 20, '2025-09-04', '2025-10-03', '', 'ADMIN', '2025-09-04 05:34:08'),
+(2, '2025-09-03', 'THOMAS', 'MAJU JAYA', '', 'MAYOR OKING NO. 062', 'CIBINONG', 'DK2', 15.00, 30, 40, '2025-09-04', '2025-10-03', '', 'ADMIN', '2025-09-04 05:35:01'),
+(3, '2025-09-03', 'THOMAS', 'SINAR JAYA MOTOR', 'ACUNG', 'BOGOR RAYA KM 43 NO. 31', 'CIBINONG', 'LK1', 15.00, 30, 60, '2025-09-04', '2025-10-03', '', 'ADMIN', '2025-09-04 05:35:41'),
+(4, '2025-09-03', 'THOMAS', 'ANEKA MOTOR', 'P HENDRA', 'BOGOR RAYA KM. 42 NO. 015', 'CIBINONG', 'LK2', 15.00, 30, 80, '2025-09-04', '2025-10-03', '', 'ADMIN', '2025-09-04 05:36:17');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `timestamp`
 --
 
@@ -529,6 +564,12 @@ ALTER TABLE `daily_visit`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `purchase_orders`
+--
+ALTER TABLE `purchase_orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `timestamp`
 --
 ALTER TABLE `timestamp`
@@ -556,6 +597,12 @@ ALTER TABLE `customers`
 --
 ALTER TABLE `daily_visit`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `purchase_orders`
+--
+ALTER TABLE `purchase_orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `timestamp`

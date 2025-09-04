@@ -24,11 +24,12 @@ if ($search != '') {
               OR alamat LIKE ?
               OR region LIKE ?
               OR area LIKE ?
-              OR kota_kabupaten LIKE ?";
+              OR kota_kabupaten LIKE ?
+              OR class LIKE ?";
     // siapkan wildcard untuk LIKE
     $searchParam = "%{$search}%";
     // isi parameter array
-    for ($i = 0; $i < 6; $i++) {
+    for ($i = 0; $i < 7; $i++) {
         $params[] = $searchParam;
         $types   .= "s";
     }
@@ -126,7 +127,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
             <li class="nav-item"><a class="nav-link active" href="customers.php">DATA CUSTOMER</a></li>
             <li class="nav-item"><a class="nav-link" href="daily_visit.php">DAILY VISIT</a></li>
             <li class="nav-item"><a class="nav-link" href="timestamp.php">TIMESTAMP</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">PURCHASE ORDER</a></li>
+            <li class="nav-item"><a class="nav-link" href="purchase_order.php">PURCHASE ORDER</a></li>
             <li class="nav-item"><a class="nav-link" href="#">STOCK BARANG</a></li>
             <li class="nav-item">
                 <a class="nav-link text-white btn btn-sm btn-danger px-3" href="logout.php">LOGOUT</a>
@@ -196,7 +197,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
               endwhile;
           else: ?>
             <tr>
-              <td colspan="9" class="text-center">BELUM ADA DATA CUSTOMER</td>
+              <td colspan="9" class="text-center">TIDAK ADA DATA.</td>
             </tr>
           <?php endif; ?>
         </tbody>

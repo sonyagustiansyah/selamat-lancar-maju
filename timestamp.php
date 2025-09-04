@@ -42,13 +42,13 @@ if (isset($_POST['submit'])) {
             $tanggal, $nama_toko, $nama_pic, $alamat, $area, $kode, $tujuan, $result, $brand, $qty, $keterangan, $foto, $inputer
         );
         if($stmt->execute()){
-            $success = "Data berhasil disimpan.";
+            $success = "DATA BERHASIL DISIMPAN.";
         } else {
-            $error = "Gagal simpan data: ".$stmt->error;
+            $error = "GAGAL SIMPAN DATA: ".$stmt->error;
         }
         $stmt->close();
     } else {
-        $error = "Tanggal dan Nama Toko wajib diisi.";
+        $error = "TANGGAL DAN NAMA TOKO WAJIB DIISI.";
     }
 }
 
@@ -141,7 +141,7 @@ if(isset($_GET['export']) && $_GET['export'] == 'excel'){
 <li class="nav-item"><a class="nav-link" href="customers.php">DATA CUSTOMER</a></li>
 <li class="nav-item"><a class="nav-link" href="daily_visit.php">DAILY VISIT</a></li>
 <li class="nav-item"><a class="nav-link active" href="timestamp.php">TIMESTAMP</a></li>
-<li class="nav-item"><a class="nav-link" href="#">PURCHASE ORDER</a></li>
+<li class="nav-item"><a class="nav-link" href="purchase_order.php">PURCHASE ORDER</a></li>
 <li class="nav-item"><a class="nav-link" href="#">STOCK BARANG</a></li>
 <li class="nav-item"><a class="nav-link text-white btn btn-sm btn-danger px-3" href="logout.php">LOGOUT</a></li>
 </ul>
@@ -184,7 +184,7 @@ if(isset($_GET['export']) && $_GET['export'] == 'excel'){
   <div class="col-md-2">
     <label class="form-label">KODE</label>
     <select name="kode" class="form-select" required>
-      <option value="">Pilih</option>
+      <option value="">PILIH</option>
       <option value="DK1">DK1</option>
       <option value="DK2">DK2</option>
       <option value="LK1">LK1</option>
@@ -194,7 +194,7 @@ if(isset($_GET['export']) && $_GET['export'] == 'excel'){
   <div class="col-md-2">
     <label class="form-label">TUJUAN</label>
     <select name="tujuan" class="form-select" required>
-      <option value="">Pilih</option>
+      <option value="">PILIH</option>
       <option value="Visit Wajib">VISIT WAJIB</option>
       <option value="Revisit">REVISIT</option>
       <option value="Reschedule">RESCHEDULE</option>
@@ -206,7 +206,7 @@ if(isset($_GET['export']) && $_GET['export'] == 'excel'){
   <div class="col-md-2">
     <label class="form-label">RESULT</label>
     <select name="result" class="form-select" required>
-      <option value="">Pilih</option>
+      <option value="">PILIH</option>
       <option value="Tervisit">TERVISIT</option>
       <option value="Tidak Tervisit">TIDAK TERVISIT</option>
     </select>
@@ -289,7 +289,7 @@ if ($result->num_rows > 0) {
         $no++;
     }
 } else {
-    echo "<tr><td colspan='14' class='text-center'>Tidak ada data</td></tr>";
+    echo "<tr><td colspan='14' class='text-center'>TIDAK ADA DATA.</td></tr>";
 }
 ?>
 </tbody>
@@ -298,7 +298,7 @@ if ($result->num_rows > 0) {
 
 <!-- Pagination -->
 <nav aria-label="Page navigation">
-<ul class="pagination justify-content-center">
+<ul class="pagination pagination-sm justify-content-center">
 <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
 <a class="page-link" href="?page=1<?= ($search ? "&search=".urlencode($search) : "") ?>">AWAL</a>
 </li>
