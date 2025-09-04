@@ -7,13 +7,13 @@ if (!isset($_SESSION['username'])) {
 
 $message = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nama_toko      = $_POST['nama_toko'];
-    $nama_pic       = $_POST['nama_pic'];
-    $alamat         = $_POST['alamat'];
-    $no_telp        = $_POST['no_telp'];
-    $region         = $_POST['region'];
-    $area           = $_POST['area'];
-    $kota_kabupaten = $_POST['kota_kabupaten'];
+    $nama_toko      = strtoupper(trim($_POST['nama_toko']));
+    $nama_pic       = strtoupper(trim($_POST['nama_pic']));
+    $alamat         = strtoupper(trim($_POST['alamat']));
+    $no_telp        = trim($_POST['no_telp']);
+    $region         = strtoupper(trim($_POST['region']));
+    $area           = strtoupper(trim($_POST['area']));
+    $kota_kabupaten = strtoupper(trim($_POST['kota_kabupaten']));
     $class          = $_POST['class'];
 
     $sql = "INSERT INTO customers 
@@ -51,11 +51,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link active" href="customers.php">DATA CUSTOMER</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">DAILY VISIT</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">TIMESTAMP</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">PURCHASE ORDER</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">STOCK BARANG</a></li>
+            <li class="nav-item"><a class="nav-link" href="customers.php">DATA CUSTOMER</a></li>
+            <li class="nav-item"><a class="nav-link" href="daily_visit.php">DAILY VISIT</a></li>
+            <li class="nav-item"><a class="nav-link" href="timestamp.php">TIMESTAMP</a></li>
+            <li class="nav-item"><a class="nav-link" href="purchase_order.php">PURCHASE ORDER</a></li>
+            <li class="nav-item"><a class="nav-link" href="stock_card.php">DAFTAR STOCK CARD</a></li>
             <li class="nav-item">
                 <a class="nav-link text-white btn btn-sm btn-danger px-3" href="logout.php">LOGOUT</a>
             </li>

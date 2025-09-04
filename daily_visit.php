@@ -15,14 +15,14 @@ $success = $error = "";
 // === Simpan data daily visit ===
 if (isset($_POST['submit'])) {
     $tanggal    = trim($_POST['tanggal']);
-    $nama_sales = trim($_POST['nama_sales']);
-    $nama_toko  = trim($_POST['nama_toko']);
-    $nama_pic   = trim($_POST['nama_pic']);
-    $alamat     = trim($_POST['alamat']);
-    $area       = trim($_POST['area']);
+    $nama_sales = strtoupper(trim($_POST['nama_sales']));
+    $nama_toko  = strtoupper(trim($_POST['nama_toko']));
+    $nama_pic   = strtoupper(trim($_POST['nama_pic']));
+    $alamat     = strtoupper(trim($_POST['alamat']));
+    $area       = strtoupper(trim($_POST['area']));
     $kode       = trim($_POST['kode']);
     $tujuan     = trim($_POST['tujuan']);
-    $keterangan = trim($_POST['keterangan']);
+    $keterangan = strtoupper(trim($_POST['keterangan']));
     $inputer    = $username;
 
     if ($tanggal && $nama_sales && $nama_toko) {
@@ -127,7 +127,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
             <li class="nav-item"><a class="nav-link active" href="daily_visit.php">DAILY VISIT</a></li>
             <li class="nav-item"><a class="nav-link" href="timestamp.php">TIMESTAMP</a></li>
             <li class="nav-item"><a class="nav-link" href="purchase_order.php">PURCHASE ORDER</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">STOCK BARANG</a></li>
+            <li class="nav-item"><a class="nav-link" href="stock_card.php">DAFTAR STOCK CARD</a></li>
             <li class="nav-item">
                 <a class="nav-link text-white btn btn-sm btn-danger px-3" href="logout.php">LOGOUT</a>
             </li>
@@ -241,17 +241,17 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
             $no = $offset + 1;
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>
-                        <td>{$no}</td>
-                        <td>{$row['tanggal']}</td>
-                        <td>{$row['nama_sales']}</td>
-                        <td>{$row['nama_toko']}</td>
-                        <td>{$row['nama_pic']}</td>
-                        <td>{$row['alamat']}</td>
-                        <td>{$row['area']}</td>
-                        <td>{$row['kode']}</td>
-                        <td>{$row['tujuan']}</td>
-                        <td>{$row['keterangan']}</td>
-                        <td>{$row['inputer']}</td>
+                        <td>".htmlspecialchars($no)."</td>
+                        <td>".htmlspecialchars($row['tanggal'])."</td>
+                        <td>".htmlspecialchars($row['nama_sales'])."</td>
+                        <td>".htmlspecialchars($row['nama_toko'])."</td>
+                        <td>".htmlspecialchars($row['nama_pic'])."</td>
+                        <td>".htmlspecialchars($row['alamat'])."</td>
+                        <td>".htmlspecialchars($row['area'])."</td>
+                        <td>".htmlspecialchars($row['kode'])."</td>
+                        <td>".htmlspecialchars($row['tujuan'])."</td>
+                        <td>".htmlspecialchars($row['keterangan'])."</td>
+                        <td>".htmlspecialchars($row['inputer'])."</td>
                       </tr>";
                 $no++;
             }

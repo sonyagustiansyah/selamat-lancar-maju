@@ -9,12 +9,12 @@ if(isset($_POST['query'])){
     if($result->num_rows > 0){
         while($row = $result->fetch_assoc()){
             echo "<a href='#' class='list-group-item list-group-item-action toko-item'
-                    data-nama='{$row['nama_toko']}'
-                    data-pic='{$row['nama_pic']}'
-                    data-alamat='{$row['alamat']}'
-                    data-area='{$row['area']}'>
-                    {$row['nama_toko']}
-                  </a>";
+                    data-nama='".htmlspecialchars($row['nama_toko'], ENT_QUOTES)."'
+                    data-pic='".htmlspecialchars($row['nama_pic'], ENT_QUOTES)."'
+                    data-alamat='".htmlspecialchars($row['alamat'], ENT_QUOTES)."'
+                    data-area='".htmlspecialchars($row['area'], ENT_QUOTES)."'>
+                    ".htmlspecialchars($row['nama_toko'])."
+                </a>";
         }
     } else {
         echo "<span class='list-group-item'>Tidak ditemukan</span>";

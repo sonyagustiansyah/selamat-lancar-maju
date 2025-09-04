@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: login.php");
         exit();
     } else {
-        $error = "Gagal register: " . $stmt->error;
+        $error = "GAGAL REGISTER: " . $stmt->error;
     }
 }
 ?>

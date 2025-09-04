@@ -19,20 +19,20 @@ if (isset($_GET['export']) && $_GET['export'] == "excel") {
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
                 <td>".$no++."</td>
-                <td>".date('Y/m/d', strtotime($row['tanggal']))."</td>
-                <td>".$row['nama_sales']."</td>
-                <td>".$row['nama_toko']."</td>
-                <td>".$row['nama_pic']."</td>
-                <td>".$row['alamat']."</td>
-                <td>".$row['area']."</td>
-                <td>".$row['kode']."</td>
-                <td>".$row['diskon']."</td>
-                <td>".$row['top_day']."</td>
-                <td>".$row['qty']."</td>
-                <td>".date('Y/m/d', strtotime($row['tanggal_kirim']))."</td>
-                <td>".date('Y/m/d', strtotime($row['ar_deadline']))."</td>
-                <td>".$row['keterangan']."</td>
-                <td>".$row['inputer']."</td>
+                <td>".htmlspecialchars(date('Y/m/d', strtotime($row['tanggal'])))."</td>
+                <td>".htmlspecialchars($row['nama_sales'])."</td>
+                <td>".htmlspecialchars($row['nama_toko'])."</td>
+                <td>".htmlspecialchars($row['nama_pic'])."</td>
+                <td>".htmlspecialchars($row['alamat'])."</td>
+                <td>".htmlspecialchars($row['area'])."</td>
+                <td>".htmlspecialchars($row['kode'])."</td>
+                <td>".htmlspecialchars($row['diskon'])."</td>
+                <td>".htmlspecialchars($row['top_day'])."</td>
+                <td>".htmlspecialchars($row['qty'])."</td>
+                <td>".htmlspecialchars(date('Y/m/d', strtotime($row['tanggal_kirim'])))."</td>
+                <td>".htmlspecialchars(date('Y/m/d', strtotime($row['ar_deadline'])))."</td>
+                <td>".htmlspecialchars($row['keterangan'])."</td>
+                <td>".htmlspecialchars($row['inputer'])."</td>
               </tr>";
     }
     echo "</table>";
@@ -128,7 +128,7 @@ $data = $conn->query("SELECT * FROM purchase_orders $where ORDER BY id DESC LIMI
     <li class="nav-item"><a class="nav-link" href="daily_visit.php">DAILY VISIT</a></li>
     <li class="nav-item"><a class="nav-link" href="timestamp.php">TIMESTAMP</a></li>
     <li class="nav-item"><a class="nav-link active" href="purchase_order.php">PURCHASE ORDER</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">STOCK BARANG</a></li>
+    <li class="nav-item"><a class="nav-link" href="stock_card.php">DAFTAR STOCK CARD</a></li>
     <li class="nav-item"><a class="nav-link text-white btn btn-sm btn-danger px-3" href="logout.php">LOGOUT</a></li>
     </ul>
     </div>

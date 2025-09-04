@@ -31,10 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             exit();
         } else {
-            $error = "Password salah!";
+            $error = "USERNAME ATAU PASSWORD SALAH!";
         }
     } else {
-        $error = "User tidak ditemukan!";
+        $error = "USER TIDAK DITEMUKAN!";
     }
 }
 ?>

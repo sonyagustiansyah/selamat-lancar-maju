@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 04, 2025 at 08:55 AM
+-- Generation Time: Sep 04, 2025 at 11:47 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -446,17 +446,6 @@ CREATE TABLE `daily_visit` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `daily_visit`
---
-
-INSERT INTO `daily_visit` (`id`, `tanggal`, `nama_sales`, `nama_toko`, `nama_pic`, `alamat`, `area`, `kode`, `tujuan`, `keterangan`, `inputer`, `created_at`) VALUES
-(1, '2025-09-03', 'thomas', 'SUBUR MOTOR I', '', 'BOGOR RAYA NO. 015 KM 41', 'CIBINONG', 'DK1', 'VISIT WAJIB', '', 'ADMIN', '2025-09-03 07:24:59'),
-(2, '2025-09-03', 'thomas', 'MAJU JAYA', '', 'MAYOR OKING NO. 062', 'CIBINONG', 'DK2', 'VISIT WAJIB', '', 'ADMIN', '2025-09-03 07:25:26'),
-(3, '2025-09-03', 'thomas', 'SINAR JAYA MOTOR', 'ACUNG', 'BOGOR RAYA KM 43 NO. 31', 'CIBINONG', 'LK1', 'VISIT WAJIB', '', 'ADMIN', '2025-09-03 07:25:53'),
-(4, '2025-09-03', 'thomas', 'ANEKA MOTOR', 'P HENDRA', 'BOGOR RAYA KM. 42 NO. 015', 'CIBINONG', 'LK2', 'VISIT WAJIB', '', 'ADMIN', '2025-09-03 07:26:53'),
-(5, '2025-09-03', 'thomas', 'SUBUR MOTOR', 'AFRIZAL', 'RAYA JAKARTA - BOGOR KM. 43', 'CIBINONG', 'DK1', 'VISIT WAJIB', '', 'ADMIN1', '2025-09-03 08:23:54');
-
 -- --------------------------------------------------------
 
 --
@@ -482,15 +471,25 @@ CREATE TABLE `purchase_orders` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `purchase_orders`
+-- Table structure for table `stock_card`
 --
 
-INSERT INTO `purchase_orders` (`id`, `tanggal`, `nama_sales`, `nama_toko`, `nama_pic`, `alamat`, `area`, `kode`, `diskon`, `top_day`, `qty`, `tanggal_kirim`, `ar_deadline`, `keterangan`, `inputer`, `created_at`) VALUES
-(1, '2025-09-03', 'THOMAS', 'SUBUR MOTOR I', '', 'BOGOR RAYA NO. 015 KM 41', 'CIBINONG', 'DK1', 15.00, 30, 20, '2025-09-04', '2025-10-03', '', 'ADMIN', '2025-09-04 05:34:08'),
-(2, '2025-09-03', 'THOMAS', 'MAJU JAYA', '', 'MAYOR OKING NO. 062', 'CIBINONG', 'DK2', 15.00, 30, 40, '2025-09-04', '2025-10-03', '', 'ADMIN', '2025-09-04 05:35:01'),
-(3, '2025-09-03', 'THOMAS', 'SINAR JAYA MOTOR', 'ACUNG', 'BOGOR RAYA KM 43 NO. 31', 'CIBINONG', 'LK1', 15.00, 30, 60, '2025-09-04', '2025-10-03', '', 'ADMIN', '2025-09-04 05:35:41'),
-(4, '2025-09-03', 'THOMAS', 'ANEKA MOTOR', 'P HENDRA', 'BOGOR RAYA KM. 42 NO. 015', 'CIBINONG', 'LK2', 15.00, 30, 80, '2025-09-04', '2025-10-03', '', 'ADMIN', '2025-09-04 05:36:17');
+CREATE TABLE `stock_card` (
+  `id` int(11) NOT NULL,
+  `kode` varchar(50) NOT NULL,
+  `nomor_oem` varchar(100) DEFAULT NULL,
+  `brand` varchar(50) DEFAULT NULL,
+  `nama_mobil` varchar(100) DEFAULT NULL,
+  `posisi` varchar(50) DEFAULT NULL,
+  `produk` varchar(100) NOT NULL,
+  `qty` int(11) DEFAULT 0,
+  `keterangan` varchar(255) DEFAULT NULL,
+  `inputer` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -516,16 +515,6 @@ CREATE TABLE `timestamp` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `timestamp`
---
-
-INSERT INTO `timestamp` (`id`, `tanggal`, `nama_toko`, `nama_pic`, `alamat`, `area`, `kode`, `tujuan`, `result`, `brand`, `qty`, `keterangan`, `foto`, `inputer`, `created_at`) VALUES
-(1, '2025-09-03', 'SUBUR MOTOR I', '', 'BOGOR RAYA NO. 015 KM 41', 'CIBINONG', 'DK1', 'VISIT WAJIB', 'TERVISIT', 'somuito', 20, '', 'uploads/1756892343_profile.png', 'ADMIN1', '2025-09-03 09:39:03'),
-(2, '2025-09-03', 'MAJU JAYA', '', 'MAYOR OKING NO. 062', 'CIBINONG', 'DK2', 'VISIT WAJIB', 'TERVISIT', 'somuito', 40, '', 'uploads/1756892415_profile.png', 'ADMIN1', '2025-09-03 09:40:15'),
-(3, '2025-09-03', 'SINAR JAYA MOTOR', 'ACUNG', 'BOGOR RAYA KM 43 NO. 31', 'CIBINONG', 'LK1', 'VISIT WAJIB', 'TERVISIT', 'somuito', 60, '', 'uploads/1756892445_profile.png', 'ADMIN1', '2025-09-03 09:40:45'),
-(4, '2025-09-03', 'ANEKA MOTOR', 'P HENDRA', 'BOGOR RAYA KM. 42 NO. 015', 'CIBINONG', 'LK2', 'VISIT WAJIB', 'TERVISIT', 'somuito', 80, '', 'uploads/1756892508_profile.png', 'ADMIN1', '2025-09-03 09:41:48');
-
 -- --------------------------------------------------------
 
 --
@@ -544,8 +533,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
-(1, 'ADMIN', '$2y$10$mVvYUx134hxrg4CKV9amR.qZoTA2ZRjSz5HlIoUM1Yazbd/xuRVtq', 'ADMIN'),
-(2, 'ADMIN1', '$2y$10$m3D8W89GIEzURq8qE1qxseDsYd.uZyBqneyw4LBiXQNdruFi3zDya', 'ADMIN');
+(1, 'THOMAS EDISON', '$2y$10$.aCz1ONV0/ahxI70yBCuTOmRyDs2xI3t9bWoMZTWjIjXfOLivkwSa', 'USER'),
+(2, 'DIAN NOVIYANTI', '$2y$10$YHhu0O5cPq2aEehc5rc5yO1nhm.3P1Qd24FQ6L/8KucHLT.yjgHPm', 'ADMIN');
 
 --
 -- Indexes for dumped tables
@@ -567,6 +556,12 @@ ALTER TABLE `daily_visit`
 -- Indexes for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `stock_card`
+--
+ALTER TABLE `stock_card`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -596,19 +591,25 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `daily_visit`
 --
 ALTER TABLE `daily_visit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `stock_card`
+--
+ALTER TABLE `stock_card`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `timestamp`
 --
 ALTER TABLE `timestamp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`

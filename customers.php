@@ -128,7 +128,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
             <li class="nav-item"><a class="nav-link" href="daily_visit.php">DAILY VISIT</a></li>
             <li class="nav-item"><a class="nav-link" href="timestamp.php">TIMESTAMP</a></li>
             <li class="nav-item"><a class="nav-link" href="purchase_order.php">PURCHASE ORDER</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">STOCK BARANG</a></li>
+            <li class="nav-item"><a class="nav-link" href="stock_card.php">DAFTAR STOCK CARD</a></li>
             <li class="nav-item">
                 <a class="nav-link text-white btn btn-sm btn-danger px-3" href="logout.php">LOGOUT</a>
             </li>
@@ -139,9 +139,6 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
 
   <!-- Content -->
   <div class="container mt-4">
-    <h3>SELAMAT DATANG, <?= $username ?> (<?= $role ?>)</h3>
-
-    <hr>
     <h4 id="customers">DATA CUSTOMERS</h4>
 
     <!-- Form Pencarian -->
@@ -184,14 +181,14 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
               while($row = $result->fetch_assoc()): ?>
               <tr>
                 <td><?= $no++ ?></td>
-                <td><?= $row['nama_toko'] ?></td>
-                <td><?= $row['nama_pic'] ?></td>
-                <td><?= $row['alamat'] ?></td>
-                <td><?= $row['no_telp'] ?></td>
-                <td><?= $row['region'] ?></td>
-                <td><?= $row['area'] ?></td>
-                <td><?= $row['kota_kabupaten'] ?></td>
-                <td>CLASS <?= $row['class'] ?></td>
+                <td><?= htmlspecialchars($row['nama_toko']) ?></td>
+                <td><?= htmlspecialchars($row['nama_pic']) ?></td>
+                <td><?= htmlspecialchars($row['alamat']) ?></td>
+                <td><?= htmlspecialchars($row['no_telp']) ?></td>
+                <td><?= htmlspecialchars($row['region']) ?></td>
+                <td><?= htmlspecialchars($row['area']) ?></td>
+                <td><?= htmlspecialchars($row['kota_kabupaten']) ?></td>
+                <td>CLASS <?= htmlspecialchars($row['class']) ?></td>
               </tr>
           <?php 
               endwhile;

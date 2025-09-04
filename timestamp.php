@@ -142,7 +142,7 @@ if(isset($_GET['export']) && $_GET['export'] == 'excel'){
 <li class="nav-item"><a class="nav-link" href="daily_visit.php">DAILY VISIT</a></li>
 <li class="nav-item"><a class="nav-link active" href="timestamp.php">TIMESTAMP</a></li>
 <li class="nav-item"><a class="nav-link" href="purchase_order.php">PURCHASE ORDER</a></li>
-<li class="nav-item"><a class="nav-link" href="#">STOCK BARANG</a></li>
+<li class="nav-item"><a class="nav-link" href="stock_card.php">DAFTAR STOCK CARD</a></li>
 <li class="nav-item"><a class="nav-link text-white btn btn-sm btn-danger px-3" href="logout.php">LOGOUT</a></li>
 </ul>
 </div>
@@ -271,20 +271,20 @@ if ($result->num_rows > 0) {
     $no = $offset + 1;
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-                <td>{$no}</td>
-                <td>{$row['tanggal']}</td>
-                <td>{$row['nama_toko']}</td>
-                <td>{$row['nama_pic']}</td>
-                <td>{$row['alamat']}</td>
-                <td>{$row['area']}</td>
-                <td>{$row['kode']}</td>
-                <td>{$row['tujuan']}</td>
-                <td>{$row['result']}</td>
-                <td>{$row['brand']}</td>
-                <td>{$row['qty']}</td>
-                <td>{$row['keterangan']}</td>
-                <td>".($row['foto'] ? "<a href='{$row['foto']}' target='_blank'>LIHAT</a>" : "-")."</td>
-                <td>{$row['inputer']}</td>
+                <td>".htmlspecialchars($no)."</td>
+                <td>".htmlspecialchars($row['tanggal'])."</td>
+                <td>".htmlspecialchars($row['nama_toko'])."</td>
+                <td>".htmlspecialchars($row['nama_pic'])."</td>
+                <td>".htmlspecialchars($row['alamat'])."</td>
+                <td>".htmlspecialchars($row['area'])."</td>
+                <td>".htmlspecialchars($row['kode'])."</td>
+                <td>".htmlspecialchars($row['tujuan'])."</td>
+                <td>".htmlspecialchars($row['result'])."</td>
+                <td>".htmlspecialchars($row['brand'])."</td>
+                <td>".htmlspecialchars($row['qty'])."</td>
+                <td>".htmlspecialchars($row['keterangan'])."</td>
+                <td>".($row['foto'] ? "<a href='".htmlspecialchars($row['foto'], ENT_QUOTES)."' target='_blank'>LIHAT</a>" : "-")."</td>
+                <td>".htmlspecialchars($row['inputer'])."</td>
               </tr>";
         $no++;
     }
