@@ -14,16 +14,16 @@ $success = $error = "";
 // --- Simpan data timestamp ---
 if (isset($_POST['submit'])) {
     $tanggal    = $_POST['tanggal'];
-    $nama_toko  = $_POST['nama_toko'];
-    $nama_pic   = $_POST['nama_pic'];
-    $alamat     = $_POST['alamat'];
-    $area       = $_POST['area'];
-    $kode       = $_POST['kode'];
-    $tujuan     = $_POST['tujuan'];
-    $result     = $_POST['result'];
-    $brand      = $_POST['brand'];
-    $qty        = (int) $_POST['qty']; // pastikan integer
-    $keterangan = $_POST['keterangan'];
+    $nama_toko  = strtoupper($_POST['nama_toko']);
+    $nama_pic   = strtoupper($_POST['nama_pic']);
+    $alamat     = strtoupper($_POST['alamat']);
+    $area       = strtoupper($_POST['area']);
+    $kode       = strtoupper($_POST['kode']);
+    $tujuan     = strtoupper($_POST['tujuan']);
+    $result     = strtoupper($_POST['result']);
+    $brand      = strtoupper($_POST['brand']);
+    $qty        = (int) $_POST['qty'];
+    $keterangan = strtoupper($_POST['keterangan']);
     $inputer    = $username;
 
     // --- Upload Foto ---
@@ -85,7 +85,7 @@ if(isset($_GET['export']) && $_GET['export'] == 'excel'){
             <th>KODE</th>
             <th>TUJUAN</th>
             <th>RESULT</th>
-            <th>BRAND</th>
+            <th>PRODUK</th>
             <th>QTY</th>
             <th>KETERANGAN</th>
             <th>FOTO</th>
@@ -212,7 +212,7 @@ if(isset($_GET['export']) && $_GET['export'] == 'excel'){
     </select>
   </div>
   <div class="col-md-2">
-    <label class="form-label">BRAND</label>
+    <label class="form-label">PRODUK</label>
     <input type="text" name="brand" class="form-control" style="text-transform: uppercase;" required>
   </div>
   <div class="col-md-2">
@@ -258,7 +258,7 @@ if(isset($_GET['export']) && $_GET['export'] == 'excel'){
   <th>KODE</th>
   <th>TUJUAN</th>
   <th>RESULT</th>
-  <th>BRAND</th>
+  <th>PRODUK</th>
   <th>QTY</th>
   <th>KETERANGAN</th>
   <th>FOTO</th>
@@ -284,7 +284,7 @@ if ($result->num_rows > 0) {
                 <td>".htmlspecialchars($row['qty'])."</td>
                 <td>".htmlspecialchars($row['keterangan'])."</td>
                 <td>".($row['foto'] ? "<a href='".htmlspecialchars($row['foto'], ENT_QUOTES)."' target='_blank'>LIHAT</a>" : "-")."</td>
-                <td>".htmlspecialchars($row['inputer'])."</td>
+                <td>".htmlspecialchars(strtoupper($row['inputer']))."</td>
               </tr>";
         $no++;
     }

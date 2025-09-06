@@ -210,7 +210,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
 
   <!-- Pencarian -->
   <form method="GET" class="d-flex mb-3">
-    <input type="text" name="search" class="form-control me-2" value="<?= htmlspecialchars($search) ?>">
+    <input type="text" name="search" class="form-control me-2" style="text-transform: uppercase;" value="<?= htmlspecialchars($search) ?>">
     <button type="submit" class="btn btn-primary">CARI</button>
     <a href="daily_visit.php" class="btn btn-warning ms-2">RESET</a>
   </form>
@@ -251,7 +251,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
                         <td>".htmlspecialchars($row['kode'])."</td>
                         <td>".htmlspecialchars($row['tujuan'])."</td>
                         <td>".htmlspecialchars($row['keterangan'])."</td>
-                        <td>".htmlspecialchars($row['inputer'])."</td>
+                        <td>".htmlspecialchars(strtoupper($row['inputer']))."</td>
                       </tr>";
                 $no++;
             }

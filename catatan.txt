@@ -1,0 +1,4 @@
+1. nama sales dibuat dropdown nama sales
+2. timestamp - upload foto ekstensi file gambar (.jpg/.jpeg/.png)
+3. tambah stock card - posisi dropdown (front, rear dan front & rear)
+4. lupa password/buat akun baru

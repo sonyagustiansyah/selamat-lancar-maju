@@ -1,5 +1,11 @@
 <?php
 include 'config.php';
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+$username = $_SESSION['username'];
+$role     = $_SESSION['role'];
 
 // Export Excel
 if(isset($_GET['export']) && $_GET['export']=='excel'){
@@ -46,7 +52,7 @@ $total_res = $conn->query("SELECT COUNT(*) as total FROM stock_card $where");
 $total = $total_res->fetch_assoc()['total'];
 $pages = ceil($total/$limit);
 
-$data = $conn->query("SELECT * FROM stock_card $where ORDER BY id DESC LIMIT $start,$limit");
+$data = $conn->query("SELECT * FROM stock_card $where ORDER BY id ASC LIMIT $start,$limit");
 ?>
 
 <!DOCTYPE html>
@@ -81,7 +87,7 @@ $data = $conn->query("SELECT * FROM stock_card $where ORDER BY id DESC LIMIT $st
 <h4>DAFTAR STOCK CARD</h4>
 
 <form method="GET" class="d-flex mb-2">
-    <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" class="form-control me-2">
+    <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" class="form-control me-2" style="text-transform: uppercase;">
     <button type="submit" class="btn btn-primary me-2">CARI</button>
     <a href="stock_card_list.php" class="btn btn-warning">RESET</a>
 </form>
@@ -111,7 +117,7 @@ if($data->num_rows>0){
                 <td>".htmlspecialchars($row['produk'])."</td>
                 <td class='text-center'>".htmlspecialchars($row['qty'])."</td>
                 <td>".htmlspecialchars($row['keterangan'])."</td>
-                <td>".htmlspecialchars($row['inputer'])."</td>
+                <td>".htmlspecialchars(strtoupper($row['inputer']))."</td>
               </tr>";
         $no++;
     }

@@ -1,5 +1,11 @@
 <?php
 include 'config.php';
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+$username = $_SESSION['username'];
+$role     = $_SESSION['role'];
 
 // ===== Export Excel =====
 if (isset($_GET['export']) && $_GET['export'] == "excel") {
@@ -104,7 +110,7 @@ $result = $conn->query("SELECT COUNT(*) AS total FROM purchase_orders $where");
 $total  = $result->fetch_assoc()['total'];
 $pages  = ceil($total / $limit);
 
-$data = $conn->query("SELECT * FROM purchase_orders $where ORDER BY id DESC LIMIT $start,$limit");
+$data = $conn->query("SELECT * FROM purchase_orders $where ORDER BY id ASC LIMIT $start,$limit");
 ?>
 
 <!DOCTYPE html>
@@ -216,7 +222,7 @@ $data = $conn->query("SELECT * FROM purchase_orders $where ORDER BY id DESC LIMI
 
     <form method="GET" class="row mb-3">
         <div class="d-flex">
-            <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" class="form-control me-2">
+            <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" class="form-control me-2" style="text-transform: uppercase;">
             <button type="submit" class="btn btn-primary me-2">CARI</button>
             <a href="purchase_order.php" class="btn btn-warning">RESET</a>
         </div>
@@ -266,7 +272,7 @@ $data = $conn->query("SELECT * FROM purchase_orders $where ORDER BY id DESC LIMI
                             <td><?= date('Y/m/d', strtotime($row['tanggal_kirim'])) ?></td>
                             <td><?= date('Y/m/d', strtotime($row['ar_deadline'])) ?></td>
                             <td><?= htmlspecialchars($row['keterangan']) ?></td>
-                            <td><?= htmlspecialchars($row['inputer']) ?></td>
+                            <td><?= htmlspecialchars(strtoupper($row['inputer'])) ?></td>
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
